@@ -4,16 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pocket {
-  private final List<Double> amountIn;
+  private final List<Double> amounts;
   private final int number;
 
   public Pocket(int number) {
-    this.amountIn = new ArrayList<>();
+    this.amounts = new ArrayList<>();
     this.number = number;
   }
 
+  public List<Double> getAmounts() {
+    return amounts;
+  }
+
   public Double getAmountIn() {
-    return amountIn.stream()
+    return amounts.stream()
         .reduce(0.0, Double::sum);
   }
 
@@ -22,7 +26,11 @@ public class Pocket {
   }
 
   public void putIn(double amount) {
-    amountIn.add(amount);
+    amounts.add(amount);
+  }
+
+  public void empty(){
+    amounts.clear();
   }
 
 }
