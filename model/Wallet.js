@@ -1,3 +1,5 @@
+const { Pocket } = require("./Pocket")
+
 class Wallet {
     
     constructor() {
@@ -74,3 +76,6 @@ class Wallet {
         }
     }
 }
+
+
+module.exports = { Wallet }

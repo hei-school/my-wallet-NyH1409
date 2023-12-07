@@ -17,3 +17,6 @@ class Pocket {
         this.amounts = [];
     }
 }
+
+
+module.exports = { Pocket }
