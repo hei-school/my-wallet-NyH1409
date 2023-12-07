@@ -37,5 +37,5 @@ Bienvenue sur MyWallet! Un simulateur de portefeuille simple en ligne de command
 - Pour l'implementation en JavaScript, il faut installer ```prompt-sync``` : ```npm install prompt-sync```
 
 **Utilisation :**
-Pour chaque langage de programmation, le point d'entree est le fichier ```run [M/m]ain.*``` 
+Pour chaque langage de programmation, le point d'entree est le fichier ```run [M/m]ain.*``` ou ```run Program.*```
 
