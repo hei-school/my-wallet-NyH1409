@@ -43,3 +43,12 @@ class Wallet:
                 random = [pk for pk in self.pockets if pk.get_amount_in() >= remain]
                 if len(random) == 0:
                     print("Vous n'avez pas assez d'argent.")
+                else :
+                    random_pk = random[0]
+                    remain_in_random = random_pk.get_amount_in() - remain
+                    random_pk.empty()
+                    random_pk.put_in(remain_in_random)
+            else:
+                remain = pocket.get_amount_in() - amount
+                pocket.empty()
+                pocket.put_in(remain)
