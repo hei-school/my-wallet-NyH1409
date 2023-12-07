@@ -19,7 +19,14 @@ class Wallet:
         if self.is_secured:
             print("La portefeuille est mon mode securise. Veuillez vous authentifier svp (6)!")
         else:
-            return sum([pk.amounts for pk in self.pockets])
+            return sum([sum(pk.amounts) for pk in self.pockets])
+
+    def get_amount_in_pocket(self, pocket_number):
+        if self.is_secured:
+            print("La portefeuille est mon mode securise. Veuillez vous authentifier svp (6)!")
+        else:
+            pocket = [pk for pk in self.pockets if pk.number == pocket_number][0]
+            return sum(pocket.amounts)
 
     def secure(self, password):
         self.is_secured = True
