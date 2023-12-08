@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import model.Money;
 import model.Wallet;
 
 public class Main {
@@ -6,12 +7,18 @@ public class Main {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
     Wallet myWallet = new Wallet();
-    while (true) {
+    Money money = new Money(1);
+    myWallet.putObjectIn(1, money);
+    myWallet.putObjectIn(2, money);
+    myWallet.putObjectOut(1, 1);
+    myWallet.putObjectOut(2, 1);
+    System.out.println(myWallet.getPockets());
+    /**while (true) {
       menu();
       System.out.print("Saisir : ");
       int choice = scanner.nextInt();
       redirect(scanner, myWallet, choice);
-    }
+    }**/
   }
 
   public static void menu() {
@@ -31,35 +38,30 @@ public class Main {
         int pocketNumber = scanner.nextInt();
         System.out.print("Le montant a placer ? (MGA) ");
         double amount = scanner.nextDouble();
-        wallet.putIn(pocketNumber, amount);
+
         break;
       case 2:
         System.out.print("Dans quelle poche ? (1 - 4) ");
         int pocketNum = scanner.nextInt();
-        System.out.printf("Dans la poche %s , vous avez %s (MGA) ", pocketNum, wallet.getAmountInPocket(pocketNum));
         break;
       case 3:
-        System.out.printf("Dans la portefeuille , vous avez %s (MGA) ", wallet.getAmountIn());
         break;
       case 4:
         System.out.print("Dans quelle poche ? (1 - 4) ");
         int pocket = scanner.nextInt();
         System.out.print("Le montant a retirer ? (MGA) ");
         double toPull = scanner.nextDouble();
-        wallet.retrieveMoney(pocket, toPull);
         break;
       case 5:
         System.out.println("Ajouter un mot de passe : ");
         String pass = scanner.next();
-        wallet.secure(pass);
         break;
       case 6:
         System.out.println("Emtrer le mot de passe : ");
         String pwd = scanner.next();
-        wallet.authenticate(pwd);
         break;
       default:
-        System.out.printf("Vous avez dans votre portefeuille : %s", wallet.getAmountIn());
+        break;
     }
   }
 }
