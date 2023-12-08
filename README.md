@@ -3,39 +3,30 @@
 
 # MyWallet
 
-Bienvenue sur MyWallet! Un simulateur de portefeuille simple en ligne de commande.
+Welcome to MyWallet! A simple commande line wallet simulator.
 
-## Comment utiliser
 
-1. **Placer de l'argent dans une poche**
-   - Choisissez l'option 1 dans le menu.
-   - Entrez le numéro de la poche (de 1 à 4).
-   - Entrez le montant à placer dans la poche (en MGA).
+## Description
+MyWallet will help to manage a virtual wallet. This app answers to question ```What if a wallet is managed via commande line?```
 
-2. **Consulter le montant total dans une poche**
-   - Choisissez l'option 2 dans le menu.
-   - Entrez le numéro de la poche (de 1 à 4).
+This app is implemented in ``4 differents programming language`` especially :
+- [Java](#installation)
+- [C#](#installation)
+- [JavaScript](#installation)
+- [Python](#installation)
 
-3. **Consulter le montant total dans le portefeuille**
-   - Choisissez l'option 3 dans le menu.
+## Installation
+Use a modern IDE (Intellij, Eclipse,VSCode...) if possible 
 
-4. **Retirer de l'argent**
-   - Choisissez l'option 4 dans le menu.
-   - Entrez le numéro de la poche (de 1 à 4).
-   - Entrez le montant à retirer de la poche (en MGA).
-
-5. **Sécuriser la portefeuille**
-   - Choisissez l'option 5 dans le menu.
-   - Entrez un mot de passe pour sécuriser la portefeuille.
-
-6. **S'identifier**
-   - Choisissez l'option 6 dans le menu.
-   - Entrez le mot de passe pour accéder à la portefeuille.
-
-**Remarque :** 
-- Si vous ne choisissez aucune option valide, le montant total dans le portefeuille sera affiché par défaut.
-- Pour l'implementation en JavaScript, il faut installer ```prompt-sync``` : ```npm install prompt-sync```
-
-**Utilisation :**
-Pour chaque langage de programmation, le point d'entree est le fichier ```run [M/m]ain.*``` ou ```run Program.*```
-
+- ```Java```
+   * We recommend you to use ```java >= 17.0.9```
+   * To bootstrap the application, run ``Main.java``
+- ``#C``
+   * We recommend you to use ```dotnet >= 7.0.114``` 
+   * Build and run application : ``dotnet build`` , then ``dotnet run``
+- ``JavaScript``
+   * We recommend you to use ```node >= 16.20.2``` 
+   * Run application : ``node main.js``
+- ``Python``
+   * We recommend you to use ```python >= 3.11.5``` 
+   * Build and run application : ``python main`` , then ``dotnet run``
