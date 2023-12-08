@@ -1,2 +1,5 @@
 .idea
 out
+bin
+node_modules
+obj
