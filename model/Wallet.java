@@ -1,35 +1,94 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import model.common.PocketObject;
 
 public class Wallet {
-  private List<Pocket> pockets;
-  private final boolean isSecured;
-  private String password;
+  private final List<Pocket> pockets;
 
   public Wallet() {
-    isSecured = false;
     pockets = List.of(new Pocket(1), new Pocket(2), new Pocket(3), new Pocket(4), new Pocket(5));
   }
 
-  public void putObjectIn(int pocketNumber, PocketObject object) {
-    pockets.stream().filter(pk -> pk.getNumber() == pocketNumber)
+  public List<Pocket> putObjectIn(int pocketNumber, PocketObject object) {
+    return pockets.stream().filter(pk -> pk.getNumber() == pocketNumber)
         .peek(pocket -> pocket.putObject(object)).collect(Collectors.toList());
   }
 
-  public void putObjectOut(int pocketNumber, int objectId) {
+  public List<Pocket> putObjectOut(int pocketNumber, int objectId) {
     List<Pocket> pocket = pockets.stream().filter(pk -> pk.getNumber() == pocketNumber)
         .toList();
     PocketObject object = pocket.get(0).getObjects().stream().filter(obj -> obj.getId() == objectId)
         .toList().get(0);
-    pocket.stream()
+    return pocket.stream()
         .peek(pk -> pk.retrieveObject(object)).collect(Collectors.toList());
   }
 
-
-  public List<Pocket> getPockets() {
-    return pockets;
+  public Pocket getObjectLocation(int objectId) {
+    PocketObject object = getObjects(pockets).stream().filter(obj -> obj.getId() == objectId)
+        .toList().get(0);
+    return pockets.stream().filter(pk -> pk.getObjects().contains(object))
+        .toList().get(0);
   }
+
+  private List<PocketObject> getObjects(List<Pocket> pockets) {
+    List<PocketObject> objects = new ArrayList<>();
+    pockets.stream().map(Pocket::getObjects)
+        .forEach(objects::addAll);
+    return objects;
+  }
+
+  public Pocket getObjectIn(int pocketNumber) {
+    return pockets.stream().filter(pk -> pk.getNumber() == pocketNumber).toList().get(0);
+  }
+
+  public Double getBalance() {
+    List<Money> money = new ArrayList<>();
+    pockets.stream().map(Pocket::getObjects)
+        .forEach(objectList -> {
+          for (PocketObject obj : objectList) {
+            if (obj.getClass().equals(Money.class)) {
+              money.add((Money) obj);
+            }
+          }
+        });
+
+    return money.stream().map(Money::getAmount).reduce(0.0, Double::sum);
+  }
+
+  public int countObject(CardType objectType) {
+    List<Card> cards = new ArrayList<>();
+    getObjects(pockets).forEach(obj -> {
+      if (obj.getClass().equals(Card.class)) {
+        cards.add((Card) obj);
+      }
+    });
+
+    switch (objectType) {
+      case NI_CARD -> {
+        return cards.stream()
+            .filter(cd -> cd.getType().equals(CardType.NI_CARD))
+            .toList().size();
+      }
+      case CREDIT_CARD -> {
+        return cards.stream()
+            .filter(cd -> cd.getType().equals(CardType.CREDIT_CARD))
+            .toList().size();
+      }
+      case DRIVING_CARD -> {
+        return cards.stream()
+            .filter(cd -> cd.getType().equals(CardType.DRIVING_CARD))
+            .toList().size();
+      }
+      case VISIT_CARD -> {
+        return cards.stream()
+            .filter(cd -> cd.getType().equals(CardType.VISIT_CARD))
+            .toList().size();
+      }
+    }
+    return 0;
+  }
+
 }

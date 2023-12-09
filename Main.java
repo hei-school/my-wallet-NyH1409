@@ -1,18 +1,18 @@
 import java.util.Scanner;
+import model.Card;
 import model.Money;
 import model.Wallet;
+
+import static model.CardType.CREDIT_CARD;
+import static model.CardType.VISIT_CARD;
 
 public class Main {
 
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
     Wallet myWallet = new Wallet();
-    Money money = new Money(1);
-    myWallet.putObjectIn(1, money);
-    myWallet.putObjectIn(2, money);
-    myWallet.putObjectOut(1, 1);
-    myWallet.putObjectOut(2, 1);
-    System.out.println(myWallet.getPockets());
+
+    System.out.println(myWallet.countObject(VISIT_CARD));
     /**while (true) {
       menu();
       System.out.print("Saisir : ");
@@ -22,13 +22,14 @@ public class Main {
   }
 
   public static void menu() {
-    System.out.println("Bienvenue sur MyWallet!");
-    System.out.println("1 - Placer de l'argent dans une poche");
-    System.out.println("2 - Consulter le montant total dans une poche");
-    System.out.println("3 - Consulter le montant total dans la portefeuille");
-    System.out.println("4 - Retirer de l'argent");
-    System.out.println("5 - Securiser la portefeuille");
-    System.out.println("6 - S'identifier");
+    System.out.println("Welcome to MyWallet!");
+    System.out.println("1 - Put object in");
+    System.out.println("2 - Put object out");
+    System.out.println("3 - Get money balance");
+    System.out.println("4 - Get object in a specific pocket");
+    System.out.println("5 - Find object (provide the identifier)");
+    System.out.println("6 - Count object [Credit card, visit card, driving card, National Card]");
+    System.out.println("7 - Indicate object lost or found");
   }
 
   public static void redirect(Scanner scanner, Wallet wallet, int choice) {
