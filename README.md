@@ -26,7 +26,16 @@ Use a modern IDE (Intellij, Eclipse,VSCode...) if possible
    * Build and run application : ``dotnet build`` , then ``dotnet run``
 - ``JavaScript``
    * We recommend you to use ```node >= 16.20.2``` 
+   * Then install ```npm install prompt-sync``` 
    * Run application : ``node main.js``
 - ``Python``
    * We recommend you to use ```python >= 3.11.5``` 
    * Build and run application : ``python main`` , then ``dotnet run``
+  
+## How do the application work?
+When the app is bootstrapping, we will in the console the folling menu :
+<div>
+  <img src="menu.png" alt="menu-screenshots">
+</div>
+
+``Notice`` : All of these features are already implemented expect the lost and found handling [7]
