@@ -1,12 +1,24 @@
-using System;
+namespace Model.Common
+{
+    public class PocketObject
+    {
+        private readonly int _id;
+        private bool _isLost;
 
-public class PocketObject {
-    private int id { get; set; }
-    private bool isLost { get ; set; }
+        public PocketObject(int id)
+        {
+            _id = id;
+        }
 
-    public PocketObject(int ident){
-        id = ident;
-        isLost = false;
+        public bool IsLost
+        {
+            get { return _isLost; }
+            set { _isLost = value; }
+        }
+
+        public int Id
+        {
+            get { return _id; }
+        }
     }
-
 }

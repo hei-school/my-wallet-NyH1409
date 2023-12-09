@@ -1,40 +1,47 @@
-using System;
 using System.Collections.Generic;
+using Model.Common;
 
-
-public class Pocket
+namespace Model
 {
-    private readonly List<PocketObject> objects;
-    private readonly int number;
-
-    public Pocket(int number)
+    public class Pocket
     {
-        this.objects = new List<PocketObject>();
-        this.number = number;
-    }
+        private readonly List<PocketObject> _objects;
+        private readonly int _number;
 
-    public List<PocketObject> GetObjects()
-    {
-        return objects;
-    }
+        public Pocket(int number)
+        {
+            _objects = new List<PocketObject>();
+            _number = number;
+        }
 
-    public int GetNumber()
-    {
-        return number;
-    }
+        public List<PocketObject> Objects
+        {
+            get { return _objects; }
+        }
 
-    public void Empty()
-    {
-        objects.Clear();
-    }
+        public int Number
+        {
+            get { return _number; }
+        }
 
-    public void PutObject(PocketObject obj)
-    {
-        objects.Add(obj);
-    }
+        public void Empty()
+        {
+            _objects.Clear();
+        }
 
-    public void RetrieveObject(PocketObject obj)
-    {
-        objects.Remove(obj);
+        public void PutObject(PocketObject obj)
+        {
+            _objects.Add(obj);
+        }
+
+        public void RetrieveObject(PocketObject obj)
+        {
+            _objects.Remove(obj);
+        }
+
+        public override string ToString()
+        {
+            return $"Pocket{{objects={_objects}, number={_number}}}";
+        }
     }
 }
