@@ -1,81 +1,63 @@
-const { Pocket } = require("./Pocket")
+import CardType from './CardType.js';
+import Card from './Card.js';
+import Money from './Money.js';
+import Pocket from './Pocket.js';
 
 class Wallet {
-    
     constructor() {
-        this.isSecured = false;
-        this.password = "";
-        this.pockets = [new Pocket(1), new Pocket(2), new Pocket(3), new Pocket(4), new Pocket(5)];
+        this._pockets = Array.from({ length: 5 }, (_, i) => new Pocket(i + 1));
     }
 
-    putIn(pocketNumber, amount) {
-        if (this.isSecured) {
-            console.log("La portefeuille est en mode sécurisé. Veuillez vous authentifier svp (6)");
-        } else {
-            const pocket = this.pockets.find(pk => pk.number === pocketNumber);
-            if (pocket) {
-                pocket.putIn(amount);
-            }
+    putObjectIn(pocketNumber, obj) {
+        const matchingPockets = this._pockets.filter(pocket => pocket.getNumber() === pocketNumber);
+        if (matchingPockets.length > 0) {
+            matchingPockets[0].putObject(obj);
         }
+        return matchingPockets;
     }
 
-    getAmountIn() {
-        if (this.isSecured) {
-            console.log("La portefeuille est en mode sécurisé. Veuillez vous authentifier svp (6)!");
-        } else {
-            return this.pockets.reduce((total, pocket) => total + pocket.getAmountIn(), 0);
+    putObjectOut(objectId) {
+        const obj = this.getObjects().find(o => o.getId() === objectId);
+        if (obj) {
+            this._pockets.forEach(pocket => pocket.retrieveObject(obj));
         }
+        return this._pockets;
     }
 
-    getAmountInPocket(pocketNumber) {
-        if (this.isSecured) {
-            console.log("La portefeuille est en mode sécurisé. Veuillez vous authentifier svp (6)!");
-        } else {
-            const pocket = this.pockets.find(pk => pk.number === pocketNumber);
-            return pocket ? pocket.getAmountIn() : 0;
-        }
+    getObjectLocation(objectId) {
+        const obj = this.getObjects().find(o => o.getId() === objectId);
+        return obj ? this._pockets.find(pocket => pocket.getObjects().includes(obj)) : null;
     }
 
-    secure(password) {
-        this.isSecured = true;
-        this.password = password;
+    getObjects() {
+        return this._pockets.flatMap(pocket => pocket.getObjects());
     }
 
-    authenticate(password) {
-        if (this.password === password) {
-            this.isSecured = false;
-        } else {
-            console.log("Mot de passe incorrect");
-        }
+    getObjectIn(pocketNumber) {
+        const matchingPocket = this._pockets.find(pocket => pocket.getNumber() === pocketNumber);
+        return matchingPocket ? matchingPocket.getObjects() : [];
     }
 
-    retrieveMoney(pocketNumber, amount) {
-        const pocket = this.pockets.find(pk => pocketNumber === pk.number);
+    getBalance() {
+        const money = this.getObjects().filter(obj => obj instanceof Money);
+        return money.reduce((total, m) => total + m.getAmount(), 0);
+    }
 
-        if (this.isSecured) {
-            console.log("La portefeuille est en mode sécurisé. Veuillez vous authentifier svp (6)!");
-        } else {
-            if (pocket.getAmountIn() < amount) {
-                console.log(`Les billets dans la poche ${pocketNumber} sont insuffisants pour le retrait.`);
-                const remain = amount - pocket.getAmountIn();
-                pocket.empty();
-
-                const random = this.pockets.find(pk => pk.getAmountIn() >= remain);
-                if (!random) {
-                    console.log("Vous n'avez pas assez d'argent.");
-                } else {
-                    const remainInRandom = random.getAmountIn() - remain;
-                    random.empty();
-                    random.putIn(remainInRandom);
-                }
-            } else {
-                const remain = pocket.getAmountIn() - amount;
-                pocket.empty();
-                pocket.putIn(remain);
-            }
+    countObject(objectType) {
+        const cards = this.getObjects().filter(obj => obj instanceof Card);
+        switch (objectType) {
+            case CardType.NI_CARD:
+                return cards.filter(cd => cd.getType() === CardType.NI_CARD).length;
+            case CardType.CREDIT_CARD:
+                return cards.filter(cd => cd.getType() === CardType.CREDIT_CARD).length;
+            case CardType.DRIVING_CARD:
+                return cards.filter(cd => cd.getType() === CardType.DRIVING_CARD).length;
+            case CardType.VISIT_CARD:
+                return cards.filter(cd => cd.getType() === CardType.VISIT_CARD).length;
+            default:
+                return 0;
         }
     }
 }
 
-
-module.exports = { Wallet }
+export default Wallet;

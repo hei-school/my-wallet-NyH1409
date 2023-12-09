@@ -1,22 +1,36 @@
 class Pocket {
-    
     constructor(number) {
-        this.amounts = [];
-        this.number = number;
+        this._objects = [];
+        this._number = number;
     }
 
-    getAmountIn() {
-        return this.amounts.reduce((total, amount) => total + amount, 0);
+    getObjects() {
+        return this._objects;
     }
 
-    putIn(amount) {
-        this.amounts.push(amount);
+    getNumber() {
+        return this._number;
     }
 
     empty() {
-        this.amounts = [];
+        this._objects = [];
+    }
+
+    putObject(obj) {
+        this._objects.push(obj);
+    }
+
+    retrieveObject(obj) {
+        const index = this._objects.indexOf(obj);
+        if (index !== -1) {
+            this._objects.splice(index, 1);
+        }
+    }
+
+    toString() {
+        return `Pocket{objects=${this._objects}, number=${this._number}}`;
     }
 }
 
 
-module.exports = { Pocket }
+export default Pocket;
