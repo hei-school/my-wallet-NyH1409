@@ -1,46 +1,72 @@
-from model.Wallet import Wallet
+import random
+
+from utils import AppUtils
+
+from model import Wallet
 
 
-def menu():
-    print("Bienvenue sur MyWallet!")
-    print("1 - Placer de l'argent dans une poche")
-    print("2 - Consulter le montant total dans une poche")
-    print("3 - Consulter le montant total dans la portefeuille")
-    print("4 - Retirer de l'argent")
-    print("5 - Securiser la portefeuille")
-    print("6 - S'identifier")
+def main():
+    my_wallet = Wallet.Wallet()
+
+    while True:
+        AppUtils.AppUtils.menu()
+        print("Saisir : ")
+        choice = int(input())
+        redirect(my_wallet, choice)
 
 
 def redirect(wallet, choice):
+    object_id = random.randint(1, 100)
+
     if choice == 1:
-        pocket_number = int(input("Dans quelle poche ? (1 - 4) "))
-        amount = float(input("Le montant a placer ? (MGA) "))
-        wallet.put_in(pocket_number, amount)
+        print("Which pocket ? (1 - 5) ")
+        pocket_number = int(input())
+        print("Object type : ")
+        print("1 - Money ")
+        print("2 - Photo")
+        print("3 - Credit Card")
+        print("4 - Visit Card")
+        print("5 - Driving Card")
+        print("6 - National Identity Card")
+        print("Choice : ")
+        obj_type = int(input())
+        AppUtils.AppUtils.object_type_menu(wallet, object_id, pocket_number, obj_type)
     elif choice == 2:
-        pocket_number = int(input("Dans quelle poche ? (1 - 4) "))
-        print(f"Dans la poche {pocket_number}, vous avez {wallet.get_amount_in_pocket(pocket_number)} (MGA)")
+        print("All object you can put out ")
+        objects = wallet.get_objects()
+        for obj in objects:
+            print(f"[{obj.get_id()} - {obj.__class__.__name__}] ")
+        print("Choose object identifier : ")
+        obj_id = int(input())
+        wallet.put_object_out(obj_id)
     elif choice == 3:
-        print(f"Dans la portefeuille, vous avez {wallet.get_amount_in()} (MGA)")
+        print(f"Actual Balance : {wallet.get_balance()} MGA ")
     elif choice == 4:
-        pocket_number = int(input("Dans quelle poche ? (1 - 4) "))
-        to_pull = float(input("Le montant a retirer ? (MGA) "))
-        wallet.retrieve_money(pocket_number, to_pull)
+        print("Which pocket ? (1 - 5) ")
+        pocket = int(input())
+        print(f"All objects in pocket number {pocket} ")
+        object_list = wallet.get_object_in(pocket)
+        for obj in object_list:
+            print(f"[{obj.get_id()} - {obj.__class__.__name__}] ")
     elif choice == 5:
-        password = input("Ajouter un mot de passe : ")
-        wallet.secure(password)
+        wallet_objects = wallet.get_objects()
+        for obj in wallet_objects:
+            print(f"[{obj.get_id()} - {obj.__class__.__name__}] ")
+        print("Choose object identifier : ")
+        obj_ide = int(input())
+        print(f"Object found in the pocket number {wallet.get_object_location(obj_ide).get_number()} ")
     elif choice == 6:
-        password = input("Entrer le mot de passe : ")
-        if wallet.authenticate(password):
-            print("Authentification réussie.")
-        else:
-            print("Mot de passe incorrect.")
+        print("Object type : ")
+        print("1 - Credit Card")
+        print("2 - Visit Card")
+        print("3 - Driving Card")
+        print("4 - National Identity Card")
+        print("Choice : ")
+        card_type = int(input())
+        AppUtils.AppUtils.object_count_menu(wallet, card_type)
     else:
-        print(f"Vous avez dans votre portefeuille : {wallet.get_amount_in()}")
+        pass
 
 
 if __name__ == "__main__":
-    my_wallet = Wallet()
-    while True:
-        menu()
-        choice = int(input("Saisir : "))
-        redirect(my_wallet, choice)
+    main()

@@ -1,0 +1,15 @@
+/home/nyhasina/Desktop/cc-d1-my-wallet-NyH1409/bin/Debug/net7.0/cc-d1-my-wallet-NyH1409
+/home/nyhasina/Desktop/cc-d1-my-wallet-NyH1409/bin/Debug/net7.0/cc-d1-my-wallet-NyH1409.deps.json
+/home/nyhasina/Desktop/cc-d1-my-wallet-NyH1409/bin/Debug/net7.0/cc-d1-my-wallet-NyH1409.runtimeconfig.json
+/home/nyhasina/Desktop/cc-d1-my-wallet-NyH1409/bin/Debug/net7.0/cc-d1-my-wallet-NyH1409.dll
+/home/nyhasina/Desktop/cc-d1-my-wallet-NyH1409/bin/Debug/net7.0/cc-d1-my-wallet-NyH1409.pdb
+/home/nyhasina/Desktop/cc-d1-my-wallet-NyH1409/obj/Debug/net7.0/cc-d1-my-wallet-NyH1409.csproj.AssemblyReference.cache
+/home/nyhasina/Desktop/cc-d1-my-wallet-NyH1409/obj/Debug/net7.0/cc-d1-my-wallet-NyH1409.GeneratedMSBuildEditorConfig.editorconfig
+/home/nyhasina/Desktop/cc-d1-my-wallet-NyH1409/obj/Debug/net7.0/cc-d1-my-wallet-NyH1409.AssemblyInfoInputs.cache
+/home/nyhasina/Desktop/cc-d1-my-wallet-NyH1409/obj/Debug/net7.0/cc-d1-my-wallet-NyH1409.AssemblyInfo.cs
+/home/nyhasina/Desktop/cc-d1-my-wallet-NyH1409/obj/Debug/net7.0/cc-d1-my-wallet-NyH1409.csproj.CoreCompileInputs.cache
+/home/nyhasina/Desktop/cc-d1-my-wallet-NyH1409/obj/Debug/net7.0/cc-d1-my-wallet-NyH1409.dll
+/home/nyhasina/Desktop/cc-d1-my-wallet-NyH1409/obj/Debug/net7.0/refint/cc-d1-my-wallet-NyH1409.dll
+/home/nyhasina/Desktop/cc-d1-my-wallet-NyH1409/obj/Debug/net7.0/cc-d1-my-wallet-NyH1409.pdb
+/home/nyhasina/Desktop/cc-d1-my-wallet-NyH1409/obj/Debug/net7.0/cc-d1-my-wallet-NyH1409.genruntimeconfig.cache
+/home/nyhasina/Desktop/cc-d1-my-wallet-NyH1409/obj/Debug/net7.0/ref/cc-d1-my-wallet-NyH1409.dll
