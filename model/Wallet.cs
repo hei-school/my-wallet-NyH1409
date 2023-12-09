@@ -2,111 +2,79 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+
 public class Wallet
 {
-    private bool isSecured;
-    private string password;
     private List<Pocket> pockets;
 
     public Wallet()
     {
-        isSecured = false;
-        password = "";
-        pockets = new List<Pocket> { new Pocket(1), new Pocket(2), new Pocket(3), new Pocket(4), new Pocket(5) };
+        pockets = new List<Pocket>
+        {
+            new Pocket(1),
+            new Pocket(2),
+            new Pocket(3),
+            new Pocket(4),
+            new Pocket(5)
+        };
     }
 
-    public void PutIn(int pocketNumber, float amount)
+    public List<Pocket> PutObjectIn(int pocketNumber, PocketObject obj)
     {
-        if (isSecured)
-        {
-            Console.WriteLine("La portefeuille est en mode sécurisé. Veuillez vous authentifier svp (6)");
-        }
-        else
-        {
-            Pocket pocket = pockets.First(pk => pk.Number == pocketNumber);
-            pocket.PutIn(amount);
-        }
+        return pockets
+            .Where(pk => pk.number == pocketNumber)
+            .Peek(pocket => pocket.PutObject(obj))
+            .ToList();
     }
 
-    public float GetAmountIn()
+    public List<Pocket> PutObjectOut(int objectId)
     {
-        if (isSecured)
-        {
-            Console.WriteLine("La portefeuille est en mode sécurisé. Veuillez vous authentifier svp (6)!");
-            return 0; // You may want to handle this differently based on your application's logic.
-        }
-        else
-        {
-            return pockets.Sum(pk => pk.GetAmountIn());
-        }
+        PocketObject obj = GetObjects().First(o => o.id == objectId);
+        return pockets
+            .Peek(pk => pk.RetrieveObject(obj))
+            .ToList();
     }
 
-    public float GetAmountInPocket(int pocketNumber)
+    public Pocket GetObjectLocation(int objectId)
     {
-        if (isSecured)
-        {
-            Console.WriteLine("La portefeuille est en mode sécurisé. Veuillez vous authentifier svp (6)!");
-            return 0; // You may want to handle this differently based on your application's logic.
-        }
-        else
-        {
-            Pocket pocket = pockets.First(pk => pk.Number == pocketNumber);
-            return pocket.GetAmountIn();
-        }
+        PocketObject obj = GetObjects().First(o => o.Id == objectId);
+        return pockets.First(pk => pk.objects.Contains(obj));
     }
 
-    public void Secure(string password)
+    public List<PocketObject> GetObjects()
     {
-        isSecured = true;
-        this.password = password;
+        List<PocketObject> objects = new List<PocketObject>();
+        pockets.SelectMany(pk => pk.objects).ToList().ForEach(objects.Add);
+        return objects;
     }
 
-    public void Authenticate(string password)
+    public List<PocketObject> GetObjectIn(int pocketNumber)
     {
-        if (this.password == password)
-        {
-            isSecured = false;
-        }
-        else
-        {
-            Console.WriteLine("Mot de passe incorrect");
-        }
+        return pockets.First(pk => pk.number == pocketNumber).objects;
     }
 
-    public void RetrieveMoney(int pocketNumber, float amount)
+    public double GetBalance()
     {
-        Pocket pocket = pockets.First(pk => pocketNumber == pk.Number);
+        List<Money> money = new List<Money>();
+        pockets.SelectMany(pk => pk.objects)
+            .OfType<Money>()
+            .ToList()
+            .ForEach(obj => money.Add(obj));
 
-        if (isSecured)
-        {
-            Console.WriteLine("La portefeuille est en mode sécurisé. Veuillez vous authentifier svp (6)!");
-        }
-        else
-        {
-            if (pocket.GetAmountIn() < amount)
-            {
-                Console.WriteLine($"Les billets dans la poche {pocketNumber} sont insuffisants pour le retrait.");
-                float remain = amount - pocket.GetAmountIn();
-                pocket.Empty();
-                var random = pockets.FirstOrDefault(pk => pk.GetAmountIn() >= remain);
+        return money.Select(m => m.amount).Sum();
+    }
 
-                if (random == null)
-                {
-                    Console.WriteLine("Vous n'avez pas assez d'argent.");
-                }
-                else
-                {
-                    float remainInRandom = random.GetAmountIn() - remain;
-                    random.Empty();
-                    random.PutIn(remainInRandom);
-                }
-            }
-            else
-            {
-                float remain = pocket.GetAmountIn() - amount;
-                pocket.Empty();
-                pocket.PutIn(remain);
-            }
-        }
+    public int CountObject(CardType objectType)
+    {
+        List<Card> cards = GetObjects().OfType<Card>().ToList();
+
+        return objectType switch
+        {
+            CardType.NI_CARD => cards.Count(cd => cd.Type == CardType.NI_CARD),
+            CardType.CREDIT_CARD => cards.Count(cd => cd.Type == CardType.CREDIT_CARD),
+            CardType.DRIVING_CARD => cards.Count(cd => cd.Type == CardType.DRIVING_CARD),
+            CardType.VISIT_CARD => cards.Count(cd => cd.Type == CardType.VISIT_CARD),
+            _ => 0
+        };
     }
 }

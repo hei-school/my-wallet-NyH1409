@@ -1,29 +1,40 @@
 using System;
 using System.Collections.Generic;
 
+
 public class Pocket
 {
-    private List<float> amounts;
-    public int Number { get; private set; }
+    private readonly List<PocketObject> objects;
+    private readonly int number;
 
     public Pocket(int number)
     {
-        amounts = new List<float>();
-        Number = number;
+        this.objects = new List<PocketObject>();
+        this.number = number;
     }
 
-    public float GetAmountIn()
+    public List<PocketObject> GetObjects()
     {
-        return amounts.Sum();
+        return objects;
     }
 
-    public void PutIn(float amount)
+    public int GetNumber()
     {
-        amounts.Add(amount);
+        return number;
     }
 
     public void Empty()
     {
-        amounts.Clear();
+        objects.Clear();
+    }
+
+    public void PutObject(PocketObject obj)
+    {
+        objects.Add(obj);
+    }
+
+    public void RetrieveObject(PocketObject obj)
+    {
+        objects.Remove(obj);
     }
 }
