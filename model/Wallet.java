@@ -9,7 +9,9 @@ public class Wallet {
   private final List<Pocket> pockets;
 
   public Wallet() {
-    pockets = List.of(new Pocket(1), new Pocket(2), new Pocket(3), new Pocket(4), new Pocket(5));
+    pockets = List.of(new Pocket(1),
+        new Pocket(2), new Pocket(3),
+        new Pocket(4), new Pocket(5));
   }
 
   public List<Pocket> putObjectIn(int pocketNumber, PocketObject object) {
@@ -17,31 +19,29 @@ public class Wallet {
         .peek(pocket -> pocket.putObject(object)).collect(Collectors.toList());
   }
 
-  public List<Pocket> putObjectOut(int pocketNumber, int objectId) {
-    List<Pocket> pocket = pockets.stream().filter(pk -> pk.getNumber() == pocketNumber)
-        .toList();
-    PocketObject object = pocket.get(0).getObjects().stream().filter(obj -> obj.getId() == objectId)
+  public List<Pocket> putObjectOut(int objectId) {
+    PocketObject object = getObjects().stream().filter(obj -> obj.getId() == objectId)
         .toList().get(0);
-    return pocket.stream()
+    return pockets.stream()
         .peek(pk -> pk.retrieveObject(object)).collect(Collectors.toList());
   }
 
   public Pocket getObjectLocation(int objectId) {
-    PocketObject object = getObjects(pockets).stream().filter(obj -> obj.getId() == objectId)
+    PocketObject object = getObjects().stream().filter(obj -> obj.getId() == objectId)
         .toList().get(0);
     return pockets.stream().filter(pk -> pk.getObjects().contains(object))
         .toList().get(0);
   }
 
-  private List<PocketObject> getObjects(List<Pocket> pockets) {
+  public List<PocketObject> getObjects() {
     List<PocketObject> objects = new ArrayList<>();
     pockets.stream().map(Pocket::getObjects)
         .forEach(objects::addAll);
     return objects;
   }
 
-  public Pocket getObjectIn(int pocketNumber) {
-    return pockets.stream().filter(pk -> pk.getNumber() == pocketNumber).toList().get(0);
+  public List<PocketObject> getObjectIn(int pocketNumber) {
+    return pockets.stream().filter(pk -> pk.getNumber() == pocketNumber).toList().get(0).getObjects();
   }
 
   public Double getBalance() {
@@ -60,7 +60,7 @@ public class Wallet {
 
   public int countObject(CardType objectType) {
     List<Card> cards = new ArrayList<>();
-    getObjects(pockets).forEach(obj -> {
+    getObjects().forEach(obj -> {
       if (obj.getClass().equals(Card.class)) {
         cards.add((Card) obj);
       }
