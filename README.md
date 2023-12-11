@@ -30,7 +30,7 @@ Use a modern IDE (Intellij, Eclipse,VSCode...) if possible
    * Run application : ``node main.js``
 - ``Python``
    * We recommend you to use ```python >= 3.11.5``` 
-   * Build and run application : ``python main`` , then ``dotnet run``
+   * Build and run application : ``python main``
   
 ## How do the application work?
 When the app is bootstrapping, we will in the console the folling menu :
